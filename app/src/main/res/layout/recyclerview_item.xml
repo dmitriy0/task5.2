@@ -18,10 +18,11 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

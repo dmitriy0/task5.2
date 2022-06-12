@@ -27,11 +27,11 @@ class Adapter(private val data: ArrayList<Hero>, private val activity: Activity)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val hero = data[position]
         holder.name.text = hero.name
-        Picasso.get().load(hero.image.url).into(holder.icon)
+        Picasso.get().load(hero.images.xs).into(holder.icon)
         holder.card.setOnClickListener{
             val intent = Intent(activity, ActivityHero::class.java)
             intent.putExtra("name", hero.name)
-            intent.putExtra("imageUrl", hero.image.url)
+            intent.putExtra("imageUrl", hero.images.lg)
             intent.putExtra("gender",
                 if (hero.appearance.gender == "-" || hero.appearance.gender == "null") "no information available"
                 else hero.appearance.gender

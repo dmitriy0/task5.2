@@ -9,5 +9,5 @@ import retrofit2.http.Url
 
 interface ApiService {
     @GET
-    fun loadHero(@Url id: String): Call<Hero?>?
+    fun loadHero(@Url route: String): Call<ArrayList<Hero>>?
 }

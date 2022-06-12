@@ -22,32 +22,33 @@ class MainActivity : AppCompatActivity() {
 
         data = ArrayList<Hero>()
         recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = Adapter(data, this)
-        recyclerView.adapter = adapter
+
 
         val httpClient = OkHttpClient.Builder()
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://www.superheroapi.com/api.php/3202191630032155/")
+            .baseUrl("https://akabab.github.io/superhero-api/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
             .build()
         val apiService: ApiService = retrofit.create(ApiService::class.java)
 
-        for (i in 1..731) {
-            val call: Call<Hero?>? = apiService.loadHero("$i")
-            call!!.enqueue(object : Callback<Hero?> {
-                override fun onResponse(call: Call<Hero?>, response: Response<Hero?>) {
-                    this@MainActivity.runOnUiThread {
-                        data.add(response.body()!!)
-                        adapter.notifyItemInserted(data.size-1)
-                    }
-                }
 
-                override fun onFailure(call: Call<Hero?>, t: Throwable) {
-                }
+        val call: Call<ArrayList<Hero>>? = apiService.loadHero("all.json")
+        call!!.enqueue(object : Callback<ArrayList<Hero>> {
 
-            })
-        }
+            override fun onResponse( call: Call<ArrayList<Hero>>, response: Response<ArrayList<Hero>>) {
+                this@MainActivity.runOnUiThread {
+
+                    val adapter = Adapter(response.body()!!, this@MainActivity)
+                    recyclerView.adapter = adapter
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Hero>>, t: Throwable) {
+
+            }
+        })
+
 
 
 
