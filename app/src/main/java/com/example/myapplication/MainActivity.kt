@@ -14,15 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
-    lateinit var data: ArrayList<Hero>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        data = ArrayList<Hero>()
         recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-
 
         val httpClient = OkHttpClient.Builder()
         val retrofit: Retrofit = Retrofit.Builder()
@@ -38,9 +35,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse( call: Call<ArrayList<Hero>>, response: Response<ArrayList<Hero>>) {
                 this@MainActivity.runOnUiThread {
-
-                    val adapter = Adapter(response.body()!!, this@MainActivity)
-                    recyclerView.adapter = adapter
+                    
+                    recyclerView.adapter = Adapter(response.body()!!, this@MainActivity)
                 }
             }
 
